@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import com.brunoguedes.apiRestful.domain.Post;
 import com.brunoguedes.apiRestful.domain.User;
 import com.brunoguedes.apiRestful.dto.AuthorDTO;
+import com.brunoguedes.apiRestful.dto.CommentDTO;
 import com.brunoguedes.apiRestful.repositories.PostRepository;
 import com.brunoguedes.apiRestful.repositories.UserRepository;
 
@@ -38,9 +39,16 @@ public class Instantiation implements CommandLineRunner{
 		
 		userRepository.saveAll(Arrays.asList(maria, alex, bob));
 		
-		Post post1 = new Post(null, sdf.parse("21/03/2018"), "Going to travel", "I'm going to travel to São Paulo, cya!", new AuthorDTO(maria));
-		Post post2 = new Post(null, sdf.parse("23/03/2018"), "Good Morning", "I woke up happy today!", new AuthorDTO(maria));
-				
+		Post post1 = new Post(null, sdf.parse("21/03/2020"), "Going to travel", "I'm going to travel to São Paulo, cya!", new AuthorDTO(maria));
+		Post post2 = new Post(null, sdf.parse("23/03/2020"), "Good Morning", "I woke up happy today!", new AuthorDTO(maria));
+		
+		CommentDTO c1 = new CommentDTO("Good travel bro!", sdf.parse("21/03/2020"), new AuthorDTO(alex));
+		CommentDTO c2 = new CommentDTO("Enjoy", sdf.parse("22/03/2020"), new AuthorDTO(bob));
+		CommentDTO c3 = new CommentDTO("Have a nice day!", sdf.parse("23/03/2020"), new AuthorDTO(alex));
+		
+		post1.getComments().addAll(Arrays.asList(c1, c2));
+		post2.getComments().addAll(Arrays.asList(c3));
+		
 		postRepository.saveAll(Arrays.asList(post1, post2));
 		
 		maria.getPosts().addAll(Arrays.asList(post1, post2));
